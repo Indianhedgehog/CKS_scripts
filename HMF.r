@@ -29,6 +29,7 @@ java -Xms4G -Xmx32G -cp sage.jar com.hartwig.hmftools.sage.SageApplication \
     -output_vcf ${PID}/sage/${PID}.sage.vcf.gz
 
 ##PAVE
+mkdir -p ${PID}\pave
 
 java -jar pave.jar \ 
   -sample ${PID} \
@@ -40,6 +41,8 @@ java -jar pave.jar \
   -output_dir ${PID}/pave/ \
   -threads 10
 
+mkdir -p ${PID}\amber
+
 ##AMBER
 java -jar amber.jar com.hartwig.hmftools.amber.AmberApplication \
     -reference ${controlSample} \
@@ -50,6 +53,7 @@ java -jar amber.jar com.hartwig.hmftools.amber.AmberApplication \
     -threads 10 \
     -loci /path/to/GermlineHetPon.37.vcf.gz 
 
+mkdir -p ${PID}\cobalt
 ##COBALT
 java -jar -Xmx8G cobalt.jar \
     -reference ${controlSample} \
@@ -60,7 +64,7 @@ java -jar -Xmx8G cobalt.jar \
     -threads 10 \ 
     -gc_profile /ref_data/GC_profile.1000bp.37.cnp
 
-
+mkdir -p ${PID}\gridss
 ##GRIDSS
 gridss --reference /path/to/refGenome.fasta \
 --output ${PID}/gridss/${PID}.vcf.gz --assembly ${PID}/gridss/${PID}.assembly.gridss.bam \
@@ -68,6 +72,8 @@ gridss --reference /path/to/refGenome.fasta \
 --blacklist /path/to/exclude_list.bed \
 --labels ${tumorSample},${controlSample}  ${Tumor} ${Control}
 
+
+mkdir -p ${PID}\gripss
 ##GRIPSS
 java -jar gripss.jar \
    -sample ${PID} \
@@ -81,6 +87,7 @@ java -jar gripss.jar \
    -vcf ${PID}.vcf.gz \
    -output_dir ${PID}/gripss
 
+mkdir -p ${PID}\purple
 ##PURPLE
 java -jar purple.jar \
    -reference ${controlSample} \
@@ -97,7 +104,7 @@ java -jar purple.jar \
    -circos /path/circos-0.69-6/bin/circos \
    -output_dir /${PID}/purple/ \
 
-
+mkdir -p ${PID}\linx
 ##LINX
 java -jar linx.jar \
     -sample ${PID} \
